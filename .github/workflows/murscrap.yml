@@ -1,0 +1,36 @@
+name: MURScrap Spider
+
+on:
+  schedule:
+    # Esegui ogni 2 giorni alle ore 08:00 UTC
+    - cron: '0 8 */2 * *'
+  workflow_dispatch: # Permette di avviare manualmente dal sito GitHub
+
+jobs:
+  scrape-and-notify:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run Spider
+      env:
+        GMAIL_USER: ${{ secrets.GMAIL_USER }}
+        GMAIL_PASS: ${{ secrets.GMAIL_PASS }}
+      run: node index.js
+
+    - name: Commit history.json
+      # Committa il file history se ci sono cambiamenti
+      uses: stefanzweifel/git-auto-commit-action@v5
+      with:
+        commit_message: "Update MURScrap history.json"
+        file_pattern: 'history.json'
