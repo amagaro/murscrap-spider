@@ -1,9 +1,6 @@
 name: MURScrap Spider
 
 on:
-  push:
-    branches:
-      - main
   schedule:
     - cron: '0 8 */2 * *'
   workflow_dispatch:
@@ -30,7 +27,6 @@ jobs:
       env:
         GMAIL_USER: ${{ secrets.GMAIL_USER }}
         GMAIL_PASS: ${{ secrets.GMAIL_PASS }}
-        TEST_MODE: 'true'
       run: node index.js
 
     - name: Commit changes

@@ -151,7 +151,7 @@ async function sendEmail(newBandi) {
     
     let mailOptions = {
         from: `"MURScrap Bot" <${process.env.GMAIL_USER}>`,
-        to: process.env.GMAIL_USER, // sends to self
+        to: 'antonio.magaro@uniroma3.it',
         subject: TEST_MODE ? `[MURScrap TEST] Trovati ${newBandi.length} bandi` : `[MURScrap] Trovati ${newBandi.length} nuovi bandi per 08/CEAR-08`,
         html: htmlContent
     };
