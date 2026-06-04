@@ -1,10 +1,12 @@
 name: MURScrap Spider
 
 on:
+  push:
+    branches:
+      - main
   schedule:
-    # Esegui ogni 2 giorni alle ore 08:00 UTC
     - cron: '0 8 */2 * *'
-  workflow_dispatch: # Permette di avviare manualmente dal sito GitHub
+  workflow_dispatch:
 
 jobs:
   scrape-and-notify:
