@@ -26,6 +26,7 @@ jobs:
       env:
         GMAIL_USER: ${{ secrets.GMAIL_USER }}
         GMAIL_PASS: ${{ secrets.GMAIL_PASS }}
+        TEST_MODE: 'true'
       run: node index.js
 
     - name: Commit history.json

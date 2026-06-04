@@ -107,8 +107,11 @@ async function sendEmail(newBandi) {
         }
     });
     
-    let htmlContent = `<h2>Nuovi Bandi MUR Trovati</h2>`;
-    htmlContent += `<p>Sono stati trovati ${newBandi.length} nuovi bandi attivi per il GSD 08/CEAR-08:</p>`;
+    let htmlContent = `
+    <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; background-color: #f9f9f9; padding: 20px; border-radius: 8px;">
+        <h2 style="color: #0056b3; border-bottom: 2px solid #0056b3; padding-bottom: 10px;">🔍 Nuovi Bandi MUR Trovati</h2>
+        <p style="font-size: 16px;">Sono stati trovati <strong>${newBandi.length}</strong> nuovi bandi attivi per il GSD 08/CEAR-08:</p>
+    `;
     
     // Group by type
     const grouped = newBandi.reduce((acc, curr) => {
@@ -118,15 +121,33 @@ async function sendEmail(newBandi) {
     }, {});
     
     for (const [type, bandi] of Object.entries(grouped)) {
-        htmlContent += `<h3>${type}</h3><ul>`;
+        htmlContent += `
+        <div style="background-color: #ffffff; border: 1px solid #ddd; border-left: 4px solid #0056b3; border-radius: 5px; margin-bottom: 20px; padding: 15px;">
+            <h3 style="color: #0056b3; margin-top: 0;">${type}</h3>
+            <ul style="list-style-type: none; padding-left: 0;">`;
+            
         for (const bando of bandi) {
-            htmlContent += `<li>
-                <strong><a href="${bando.url}">${bando.title}</a></strong><br/>
-                <small>${bando.text.substring(0, 300)}...</small>
-            </li><br/>`;
+            htmlContent += `
+                <li style="margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px dashed #eee;">
+                    <strong style="font-size: 16px;">
+                        <a href="${bando.url}" style="color: #004494; text-decoration: none;">📄 ${bando.title}</a>
+                    </strong><br/>
+                    <small style="color: #666; display: block; margin-top: 5px; line-height: 1.4;">
+                        ${bando.text.substring(0, 300)}...
+                    </small>
+                </li>`;
         }
-        htmlContent += `</ul>`;
+        htmlContent += `
+            </ul>
+        </div>`;
     }
+    
+    htmlContent += `
+        <p style="font-size: 12px; color: #999; text-align: center; margin-top: 30px;">
+            Questa è una notifica automatica generata da MURScrap Spider.<br/>
+            Selezionati per il GSD 08/CEAR-08.
+        </p>
+    </div>`;
     
     let mailOptions = {
         from: `"MURScrap Bot" <${process.env.GMAIL_USER}>`,
