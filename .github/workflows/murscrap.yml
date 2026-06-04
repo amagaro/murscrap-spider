@@ -31,11 +31,11 @@ jobs:
         GMAIL_USER: ${{ secrets.GMAIL_USER }}
         GMAIL_PASS: ${{ secrets.GMAIL_PASS }}
         TEST_MODE: 'true'
-      run: node index.js
+      run: node index.js > run_output.log 2>&1 || true
 
-    - name: Commit history.json
+    - name: Commit changes
       # Committa il file history se ci sono cambiamenti
       uses: stefanzweifel/git-auto-commit-action@v5
       with:
-        commit_message: "Update MURScrap history.json"
-        file_pattern: 'history.json'
+        commit_message: "Update MURScrap history.json e log"
+        file_pattern: 'history.json run_output.log'
