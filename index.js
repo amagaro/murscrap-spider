@@ -24,12 +24,12 @@ async function fetchBandi() {
     for (const target of TARGETS) {
         console.log(`Searching in: ${target.name}`);
         try {
-            // jv_comp_status_id=2-3 rappresenta "Aperti" (potrebbe variare su fellowship, ma come base testiamo)
+            // jv_comp_status_id=1 rappresenta "Aperti"
             // Se bb_type_code e idsettore non sono necessari, omettiamoli per pescare più risultati possibili
             // per poi filtrare in JS. Se mancano, verranno presi tutti.
             const res = await axios.get(target.url, {
                 params: {
-                    jv_comp_status_id: '2-3',
+                    jv_comp_status_id: '1',
                     bb_type_code: '%',
                     idsettore: '%'
                 }

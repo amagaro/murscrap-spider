@@ -2,7 +2,7 @@ name: MURScrap Spider
 
 on:
   schedule:
-    - cron: '0 8 */2 * *'
+    - cron: '0 6 */2 * *'
   workflow_dispatch:
 
 jobs:
