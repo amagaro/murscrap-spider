@@ -32,7 +32,8 @@ async function fetchBandi() {
                     jv_comp_status_id: '1',
                     bb_type_code: '%',
                     idsettore: '%'
-                }
+                },
+                timeout: 15000 // 15 secondi di timeout per evitare blocchi
             });
             const $ = cheerio.load(res.data);
             
@@ -151,7 +152,7 @@ async function sendEmail(newBandi) {
     
     let mailOptions = {
         from: `"MURScrap Bot" <${process.env.GMAIL_USER}>`,
-        to: 'antonio.magaro@uniroma3.it',
+        to: `antonio.magaro@uniroma3.it, ${process.env.GMAIL_USER}`,
         subject: TEST_MODE ? `[MURScrap TEST] Trovati ${newBandi.length} bandi` : `[MURScrap] Trovati ${newBandi.length} nuovi bandi per 08/CEAR-08`,
         html: htmlContent
     };
